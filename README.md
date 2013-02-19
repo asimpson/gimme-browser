@@ -1,1 +1,0 @@
-Simply add to homescreen.
