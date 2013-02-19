@@ -23,10 +23,6 @@ module.exports = (grunt) ->
         files: ["coffee/*", "js/libs/*.js"]
         tasks: "javascript"
 
-      jsTesting:
-        files: ["src/**/*.js", "specs/**/*.js"]
-        tasks: "jasmine"
-
       rootDirectory:
         files: [ "root-directory/**/*", "root-directory/.*" ]
         tasks: "default"
@@ -52,7 +48,7 @@ module.exports = (grunt) ->
           process: true
         files:
           # destination as key, sources as value
-          "dist/index.html": ["partials/_header.html", "partials/_home-page.html", "partials/_footer.html"]
+          "dist/index.html": ["partials/_header.html", "partials/_index.html", "partials/_footer.html"]
           "dist/about.html": ["partials/_header.html", "partials/_about-page.html", "partials/_footer.html"]
           "dist/404.html": "partials/404.html"
 
@@ -108,29 +104,20 @@ module.exports = (grunt) ->
       copyRootDirectory:
         command: "cp -Rp root-directory/ dist/"
 
-    jasmine:
-      src: "dist/**/*.js"
-      options:
-        specs: "specs/js/*Spec.js"
-        helpers: "specs/js/*Helper.js"
-        vendor: ["js/libs/jquery-1.9.0.min.js", "specs/lib/*.js"]
-
   grunt.loadNpmTasks "grunt-contrib-clean"
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-watch"
   grunt.loadNpmTasks "grunt-contrib-compass"
   grunt.loadNpmTasks "grunt-contrib-concat"
-  grunt.loadNpmTasks "grunt-contrib-jasmine"
   grunt.loadNpmTasks "grunt-modernizr"
   grunt.loadNpmTasks "grunt-notify"
-  grunt.loadNpmTasks "grunt-styleguide"
   grunt.loadNpmTasks "grunt-exec"
 
   # Clean and concatenate partials
   grunt.registerTask "partials", [ "clean:partials", "concat:partials" ]
 
   # Clean, compile and concatenate JS
-  grunt.registerTask "javascript", [ "clean:javascript", "coffee", "concat:js", "jasmine" ]
+  grunt.registerTask "javascript", [ "clean:javascript", "coffee", "concat:js"]
 
   # Clean and compile stylesheets
   grunt.registerTask "stylesheets", ["clean:stylesheets", "compass"]
