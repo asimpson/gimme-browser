@@ -28,9 +28,12 @@ module.exports = (grunt) ->
         tasks: "default"
 
     compass:
+      dev:
+        options:
+          environment: 'dev'
       dist:
-        files:
-          "dist/css/base.css": "scss/base.scss"
+        options:
+          environment: 'production'
 
     coffee:
       compile:
@@ -122,6 +125,8 @@ module.exports = (grunt) ->
   # Clean and compile stylesheets
   grunt.registerTask "stylesheets", ["clean:stylesheets", "compass"]
 
+  grunt.registerTask "prod_stylesheets", ["clean:stylesheets", "compass:dist"]
+
   # Clean and copy images
   grunt.registerTask "images", [ "clean:images", "exec:copyImages" ]
 
@@ -133,7 +138,7 @@ module.exports = (grunt) ->
   grunt.registerTask "docs", [ "styleguide", "exec:docco" ]
 
   # Production task
-  grunt.registerTask "prod", [ "modernizr", "default" ]
+  grunt.registerTask "prod", [ "modernizr", "default"]
 
   # Default task
   grunt.registerTask "default", [ "root-canal", "partials", "javascript", "stylesheets", "images" ]
