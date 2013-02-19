@@ -1297,9 +1297,9 @@ UTIL = {
     Gimme: {
       processGimme: function(data) {
         var orderNum;
-        orderNum = parseInt($('.more').attr("data-order"), 10);
-        $('.more').attr("data-order", orderNum + 10);
-        $(".more").show();
+        orderNum = parseInt(APP.Gimme.$moreButton.attr("data-order"), 10);
+        APP.Gimme.$moreButton.attr("data-order", orderNum + 10);
+        APP.Gimme.$moreButton.show();
         return $(data.records).each(function(index, Element) {
           var imgMarkup, imgSrc, textContent, textMarkup, textTitle;
           if (Element.asset_type === "image") {
@@ -1317,10 +1317,10 @@ UTIL = {
       },
       gimmeRequest: function(user) {
         var skip, url;
-        if ($(".more").attr("data-order") === "0") {
+        if (APP.Gimme.$moreButton.attr("data-order") === "0") {
           skip = 0;
         } else {
-          skip = parseInt($(".more").attr("data-order"), 10);
+          skip = parseInt(APP.Gimme.$moreButton.attr("data-order"), 10);
         }
         url = "https://gimmebar.com/api/v1/public/assets/" + user + "?skip=" + skip + "&jsonp_callback=?";
         return $.getJSON(url, function(data) {
@@ -1328,21 +1328,19 @@ UTIL = {
         });
       },
       init: function() {
+        APP.Gimme.$moreButton = $(".more");
         $(document).on("submit", function(e) {
-          var user;
           e.preventDefault();
-          user = $(".gimmeUser").val();
+          APP.Gimme.userVal = $(".gimmeUser").val();
           $('input:focus').blur();
           $(".content").empty();
-          return APP.Gimme.gimmeRequest(user);
+          return APP.Gimme.gimmeRequest(APP.Gimme.userVal);
         });
-        $(".more").on("click", function(e) {
-          var user;
+        APP.Gimme.$moreButton.on("click", function(e) {
           e.preventDefault();
-          user = $(".gimmeUser").val();
-          return APP.Gimme.gimmeRequest(user);
+          return APP.Gimme.gimmeRequest(APP.Gimme.userVal);
         });
-        return $(".more").hide();
+        return APP.Gimme.$moreButton.hide();
       }
     },
     common: {

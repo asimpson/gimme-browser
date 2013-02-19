@@ -383,22 +383,43 @@ table {
 }
 
 /* Windows Metro Snap mode fix */
+@-webkit-viewport {
+  width: device-width;
+}
+
+@-moz-viewport {
+  width: device-width;
+}
+
 @-ms-viewport {
   width: device-width;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\000036}}
+@-o-viewport {
+  width: device-width;
+}
+
+@viewport {
+  width: device-width;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\000038}}
+body {
+  overflow-x: hidden;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000312}}
 img {
   width: 100%;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000310}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000316}}
 h1 {
   color: #d6156c;
   text-align: center;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000315}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000321}}
 input {
   width: 100%;
   display: block;
@@ -406,12 +427,12 @@ input {
   margin-top: 0.5rem;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000321}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000327}}
 input[type="text"] {
   width: 98%;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000325}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000331}}
 input[type="submit"] {
   display: block;
   color: #d6156c;
@@ -424,20 +445,20 @@ input[type="submit"] {
   border: none;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000336}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000342}}
 #gimmeForm {
   display: block;
   width: 90%;
   margin: 0 auto;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000342}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000348}}
 header {
   width: 90%;
   margin: 0 auto;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000347}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000353}}
 .img-module, .text-module {
   width: 90%;
   margin: 0 auto;
@@ -445,7 +466,7 @@ header {
   margin-top: 1rem;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000353}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/MAMP\/htdocs\/gimme\/scss\/_styles\.scss}line{font-family:\0000359}}
 .more {
   display: block;
   color: #d6156c;
