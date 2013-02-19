@@ -2,10 +2,10 @@
 window.APP =
   Gimme:
     processGimme: (data) ->
-      orderNum = parseInt($('.more').attr("data-order"), 10)
-      $('.more').attr("data-order", orderNum+10)
+      orderNum = parseInt(APP.Gimme.$moreButton.attr("data-order"), 10)
+      APP.Gimme.$moreButton.attr("data-order", orderNum+10)
 
-      $(".more").show()
+      APP.Gimme.$moreButton.show()
 
       $(data.records).each (index, Element) ->
         if Element.asset_type is "image"
@@ -20,29 +20,30 @@ window.APP =
           $(".content").append(textMarkup)
 
     gimmeRequest: (user) ->
-      if $(".more").attr("data-order") is "0"
+      if APP.Gimme.$moreButton.attr("data-order") is "0"
         skip = 0
       else
-        skip = parseInt($(".more").attr("data-order"), 10)
+        skip = parseInt(APP.Gimme.$moreButton.attr("data-order"), 10)
 
       url = "https://gimmebar.com/api/v1/public/assets/"+user+"?skip="+skip+"&jsonp_callback=?"
       $.getJSON url, (data) ->
         APP.Gimme.processGimme(data)
 
     init: ->
+      APP.Gimme.$moreButton = $(".more")
+
       $(document).on "submit", (e) ->
         e.preventDefault()
-        user = $(".gimmeUser").val()
+        APP.Gimme.userVal = $(".gimmeUser").val()
         $('input:focus').blur();
         $(".content").empty()
-        APP.Gimme.gimmeRequest(user)
+        APP.Gimme.gimmeRequest(APP.Gimme.userVal)
 
-      $(".more").on "click", (e) ->
+      APP.Gimme.$moreButton.on "click", (e) ->
         e.preventDefault()
-        user = $(".gimmeUser").val()
-        APP.Gimme.gimmeRequest(user)
+        APP.Gimme.gimmeRequest(APP.Gimme.userVal)
 
-      $(".more").hide()
+      APP.Gimme.$moreButton.hide()
 
   # Initializers
   common:
