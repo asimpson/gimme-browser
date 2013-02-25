@@ -2,6 +2,7 @@
 window.APP =
   Gimme:
     processGimme: (data) ->
+      console.log data
       orderNum = parseInt(APP.Gimme.$moreButton.attr("data-order"), 10)
       APP.Gimme.$moreButton.attr("data-order", orderNum+10)
 
@@ -19,13 +20,21 @@ window.APP =
           textMarkup = "<div class=\"text-module\"><h2>"+textTitle+"</h2>"+"<p>"+textContent+"</p></div>"
           $(".content").append(textMarkup)
 
-    gimmeRequest: (user) ->
+    gimmeRequest: (user, collection) ->
+      encodedCollection = encodeURIComponent(collection)
+      console.log collection
+      console.log encodedCollection
+
       if APP.Gimme.$moreButton.attr("data-order") is "0"
         skip = 0
       else
         skip = parseInt(APP.Gimme.$moreButton.attr("data-order"), 10)
 
-      url = "https://gimmebar.com/api/v1/public/assets/"+user+"?skip="+skip+"&jsonp_callback=?"
+      if collection.length is 0
+        url = "https://gimmebar.com/api/v1/public/assets/"+user+"?skip="+skip+"&jsonp_callback=?"
+      else
+        url = "https://gimmebar.com/api/v1/public/assets/"+user+"/"+encodedCollection+"?skip="+skip+"&jsonp_callback=?"
+
       $.getJSON url, (data) ->
         APP.Gimme.processGimme(data)
 
@@ -35,9 +44,10 @@ window.APP =
       $(document).on "submit", (e) ->
         e.preventDefault()
         APP.Gimme.userVal = $(".gimmeUser").val()
+        APP.Gimme.collectionVal = $(".gimmeCollection").val()
         $('input:focus').blur();
         $(".content").empty()
-        APP.Gimme.gimmeRequest(APP.Gimme.userVal)
+        APP.Gimme.gimmeRequest(APP.Gimme.userVal, APP.Gimme.collectionVal)
 
       APP.Gimme.$moreButton.on "click", (e) ->
         e.preventDefault()

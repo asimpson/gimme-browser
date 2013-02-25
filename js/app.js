@@ -4,6 +4,7 @@
     Gimme: {
       processGimme: function(data) {
         var orderNum;
+        console.log(data);
         orderNum = parseInt(APP.Gimme.$moreButton.attr("data-order"), 10);
         APP.Gimme.$moreButton.attr("data-order", orderNum + 10);
         APP.Gimme.$moreButton.show();
@@ -22,14 +23,21 @@
           }
         });
       },
-      gimmeRequest: function(user) {
-        var skip, url;
+      gimmeRequest: function(user, collection) {
+        var encodedCollection, skip, url;
+        encodedCollection = encodeURIComponent(collection);
+        console.log(collection);
+        console.log(encodedCollection);
         if (APP.Gimme.$moreButton.attr("data-order") === "0") {
           skip = 0;
         } else {
           skip = parseInt(APP.Gimme.$moreButton.attr("data-order"), 10);
         }
-        url = "https://gimmebar.com/api/v1/public/assets/" + user + "?skip=" + skip + "&jsonp_callback=?";
+        if (collection.length === 0) {
+          url = "https://gimmebar.com/api/v1/public/assets/" + user + "?skip=" + skip + "&jsonp_callback=?";
+        } else {
+          url = "https://gimmebar.com/api/v1/public/assets/" + user + "/" + encodedCollection + "?skip=" + skip + "&jsonp_callback=?";
+        }
         return $.getJSON(url, function(data) {
           return APP.Gimme.processGimme(data);
         });
@@ -39,9 +47,10 @@
         $(document).on("submit", function(e) {
           e.preventDefault();
           APP.Gimme.userVal = $(".gimmeUser").val();
+          APP.Gimme.collectionVal = $(".gimmeCollection").val();
           $('input:focus').blur();
           $(".content").empty();
-          return APP.Gimme.gimmeRequest(APP.Gimme.userVal);
+          return APP.Gimme.gimmeRequest(APP.Gimme.userVal, APP.Gimme.collectionVal);
         });
         APP.Gimme.$moreButton.on("click", function(e) {
           e.preventDefault();
