@@ -2,9 +2,23 @@
 
   window.APP = {
     Gimme: {
+      setStorage: function(collection) {
+        var previous, tags;
+        if (Modernizr.localstorage) {
+          tags = [];
+          previous = localStorage.getItem(APP.Gimme.userVal);
+          tags.push(previous, APP.Gimme.collectionVal);
+          JSON.stringify(tags);
+          localStorage.setItem(APP.Gimme.userVal, tags);
+          return $(tags).each(function(index, Element) {
+            console.log(index);
+            return console.log(Element);
+          });
+        }
+      },
       processGimme: function(data) {
         var orderNum;
-        console.log(data);
+        APP.Gimme.setStorage(APP.Gimme.collectionVal);
         orderNum = parseInt(APP.Gimme.$moreButton.attr("data-order"), 10);
         APP.Gimme.$moreButton.attr("data-order", orderNum + 10);
         APP.Gimme.$moreButton.show();
@@ -23,11 +37,12 @@
           }
         });
       },
+      trackSkip: function() {
+        return APP.Gimme.$moreButton.attr("data-order", "0");
+      },
       gimmeRequest: function(user, collection) {
         var encodedCollection, skip, url;
-        encodedCollection = encodeURIComponent(collection);
-        console.log(collection);
-        console.log(encodedCollection);
+        encodedCollection = encodeURIComponent(collection).replace(/%20/g, '-');
         if (APP.Gimme.$moreButton.attr("data-order") === "0") {
           skip = 0;
         } else {
@@ -50,11 +65,12 @@
           APP.Gimme.collectionVal = $(".gimmeCollection").val();
           $('input:focus').blur();
           $(".content").empty();
+          APP.Gimme.trackSkip();
           return APP.Gimme.gimmeRequest(APP.Gimme.userVal, APP.Gimme.collectionVal);
         });
         APP.Gimme.$moreButton.on("click", function(e) {
           e.preventDefault();
-          return APP.Gimme.gimmeRequest(APP.Gimme.userVal);
+          return APP.Gimme.gimmeRequest(APP.Gimme.userVal, APP.Gimme.collectionVal);
         });
         return APP.Gimme.$moreButton.hide();
       }

@@ -1,8 +1,20 @@
 # When you change APP, be sure to update it in mylibs/util.js
 window.APP =
   Gimme:
+    setStorage: (collection) ->
+      if Modernizr.localstorage
+        tags = []
+        previous = localStorage.getItem(APP.Gimme.userVal)
+        tags.push(previous, APP.Gimme.collectionVal)
+        JSON.stringify(tags);
+        localStorage.setItem(APP.Gimme.userVal, tags)
+        $(tags).each (index, Element) ->
+          console.log index
+          console.log Element
+
     processGimme: (data) ->
-      console.log data
+      APP.Gimme.setStorage(APP.Gimme.collectionVal)
+
       orderNum = parseInt(APP.Gimme.$moreButton.attr("data-order"), 10)
       APP.Gimme.$moreButton.attr("data-order", orderNum+10)
 
@@ -20,10 +32,11 @@ window.APP =
           textMarkup = "<div class=\"text-module\"><h2>"+textTitle+"</h2>"+"<p>"+textContent+"</p></div>"
           $(".content").append(textMarkup)
 
+    trackSkip: ->
+      APP.Gimme.$moreButton.attr("data-order", "0");
+
     gimmeRequest: (user, collection) ->
-      encodedCollection = encodeURIComponent(collection)
-      console.log collection
-      console.log encodedCollection
+      encodedCollection = encodeURIComponent(collection).replace(/%20/g, '-')
 
       if APP.Gimme.$moreButton.attr("data-order") is "0"
         skip = 0
@@ -47,11 +60,12 @@ window.APP =
         APP.Gimme.collectionVal = $(".gimmeCollection").val()
         $('input:focus').blur();
         $(".content").empty()
+        APP.Gimme.trackSkip()
         APP.Gimme.gimmeRequest(APP.Gimme.userVal, APP.Gimme.collectionVal)
 
       APP.Gimme.$moreButton.on "click", (e) ->
         e.preventDefault()
-        APP.Gimme.gimmeRequest(APP.Gimme.userVal)
+        APP.Gimme.gimmeRequest(APP.Gimme.userVal, APP.Gimme.collectionVal)
 
       APP.Gimme.$moreButton.hide()
 
