@@ -18,7 +18,9 @@
       },
       processGimme: function(data) {
         var orderNum;
-        APP.Gimme.setStorage(APP.Gimme.collectionVal);
+        if (APP.Gimme.collectionVal.length > 0) {
+          APP.Gimme.setStorage(APP.Gimme.collectionVal);
+        }
         orderNum = parseInt(APP.Gimme.$moreButton.attr("data-order"), 10);
         APP.Gimme.$moreButton.attr("data-order", orderNum + 10);
         APP.Gimme.$moreButton.show();
