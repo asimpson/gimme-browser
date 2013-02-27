@@ -4,17 +4,12 @@
     Gimme: {
       setStorage: function(collection) {
         var previous, tags;
-        if (Modernizr.localstorage) {
-          tags = [];
-          previous = localStorage.getItem(APP.Gimme.userVal);
-          tags.push(previous, APP.Gimme.collectionVal);
-          JSON.stringify(tags);
-          localStorage.setItem(APP.Gimme.userVal, tags);
-          return $(tags).each(function(index, Element) {
-            console.log(index);
-            return console.log(Element);
-          });
-        }
+        tags = [];
+        previous = store.get(APP.Gimme.userVal);
+        tags.push(previous);
+        tags.push(collection);
+        console.log(tags);
+        return store.set(APP.Gimme.userVal, tags);
       },
       processGimme: function(data) {
         var orderNum;

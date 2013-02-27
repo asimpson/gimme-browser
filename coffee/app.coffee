@@ -2,15 +2,12 @@
 window.APP =
   Gimme:
     setStorage: (collection) ->
-      if Modernizr.localstorage
-        tags = []
-        previous = localStorage.getItem(APP.Gimme.userVal)
-        tags.push(previous, APP.Gimme.collectionVal)
-        JSON.stringify(tags);
-        localStorage.setItem(APP.Gimme.userVal, tags)
-        $(tags).each (index, Element) ->
-          console.log index
-          console.log Element
+      tags = []
+      previous = store.get(APP.Gimme.userVal)
+      tags.push previous
+      tags.push collection
+      console.log tags
+      store.set(APP.Gimme.userVal, tags)
 
     processGimme: (data) ->
       if APP.Gimme.collectionVal.length > 0
